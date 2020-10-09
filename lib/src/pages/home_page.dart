@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:qrscanner_app/src/models/scan_model.dart';
 
 import 'package:qrscanner_app/src/pages/directions_page.dart';
 import 'package:qrscanner_app/src/pages/maps_page.dart';
 
-import 'package:barcode_scan/barcode_scan.dart';
+/* import 'package:barcode_scan/barcode_scan.dart'; */
+import 'package:qrscanner_app/src/providers/db_provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -69,9 +71,9 @@ class _HomePageState extends State<HomePage> {
  */
 
   _scanQR() async {
-    String futureString = '';
+    String futureString = ' https://github.com/omairapalacios';
 
-   /*  try {
+    /*  try {
       futureString = await BarcodeScanner.scan();
     } catch (e) {
       futureString = e.toString();
@@ -79,8 +81,11 @@ class _HomePageState extends State<HomePage> {
 
     print('Future: $futureString');
 
+   */
+
     if (futureString != null) {
-      print('tenemos info');
-    } */
+      final scan = ScanModel( value: futureString );
+      DBProvider.db.newScan(scan);
+    }
   }
 }
