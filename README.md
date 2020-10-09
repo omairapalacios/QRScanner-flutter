@@ -1,16 +1,16 @@
-# qrscanner_app
+# QRScanner App :camera:
 
-A new Flutter project.
+II Proyecto Flutter : Aplicación que te permite escanear múltiples códigos QR de páginas y direcciones para luego almacenarlas y gestionarlas en una base de datos. 
 
-## Getting Started
+## Temas aprendidos
 
-This project is a starting point for a Flutter application.
+- Permisos de acceso a recursos de dispositivos móviles : Cámara
 
-A few resources to get you started if this is your first Flutter project:
+- Manejo de estados con widgets stateful.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- Configursción y sentencias SQLite.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Uso de mapas con Maxbox y marcadores.
+
+- Diseño UI
+
