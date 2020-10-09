@@ -11,7 +11,10 @@ class MyApp extends StatelessWidget {
       initialRoute: 'home', 
       routes: {
         'home': (BuildContext context) => HomePage()
-      }     
+      }, 
+      theme: ThemeData(
+        primaryColor:  Colors.deepPurple
+      ),  
     );
   }
 }
