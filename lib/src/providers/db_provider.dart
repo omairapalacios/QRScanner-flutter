@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
+import 'package:qrscanner_app/src/models/scan_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBProvider {
@@ -24,11 +25,64 @@ class DBProvider {
 
     return await openDatabase(path, version: 1,
         onCreate: (Database db, int version) async {
-      await db.execute(
-          'CREATE TABLE Scans ('
+      await db.execute('CREATE TABLE Scans ('
           ' id INTEGER PRIMARY KEY,'
           ' type TEXT,'
           ' valor TEXT');
     });
+  }
+
+  newScanRaw(ScanModel newScan) async {
+    final db = await database;
+    final res = await db.rawInsert("INSERT Into Scans (id, type, value) "
+        "VALUES ( ${newScan.id}, '${newScan.type}', '${newScan.value}'");
+    return res;
+  }
+
+  newScan(ScanModel newScan) async {
+    final db = await database;
+    final res = await db.insert('Scans', newScan.toJson());
+    return res;
+  }
+
+  Future<ScanModel> getScanId(int id) async {
+    final db = await database;
+    final res = await db.query('Scans', where: 'id = ?', whereArgs: [id]);
+    return res.isNotEmpty ? ScanModel.fromJson(res.first) : null;
+  }
+
+  Future<List<ScanModel>> getAllScans() async {
+    final db = await database;
+    final res = await db.query('Scans');
+    List<ScanModel> list =
+        res.isNotEmpty ? res.map((s) => ScanModel.fromJson(s)).toList() : [];
+    return list;
+  }
+
+  Future<List<ScanModel>> getScanByType(String type) async {
+    final db = await database;
+    final res = await db.rawQuery("SELECT * FROM Scans WHERE type='$type'");
+    List<ScanModel> list =
+        res.isNotEmpty ? res.map((s) => ScanModel.fromJson(s)).toList() : [];
+    return list;
+  }
+
+  Future<int> updateScan(ScanModel newScan) async {
+    final db = await database;
+    final res = await db.update('Scans', newScan.toJson(),
+        where: 'id = ?', whereArgs: [newScan.id]);
+    return res;
+  }
+
+  Future<int> deleteScan(int id) async {
+    final db = await database;
+    final res = await db.delete('Scans', where: 'id = ?', whereArgs: [id]);
+    return res;
+  }
+
+  Future<int> deleteAllScans() async {
+    final db = await database;
+    final res = await db.rawDelete('DELETE FROM Scans');
+    return res;
   }
 }
